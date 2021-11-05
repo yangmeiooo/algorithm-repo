@@ -128,3 +128,49 @@ class Solution {
 }
 ```
 
+
+
+```java
+/*  
+        处理不了，[1] k=1
+        [1,-1] k=1
+    */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums.length == 1) return new int[]{nums[0]};
+        int l = 0;
+        int r = 0;
+        int ans = nums[0];
+        int len = nums.length;
+
+        List<Integer> dp = new ArrayList<>();
+
+        while(r < len) {
+
+             //处理右边
+            while(r + 1 < len && (r - l) <= (k - 1)) {
+                r++;
+                ans =  ans > nums[r] ? ans: nums[r];
+
+                if (r - l == (k - 1)) {
+                    dp.add(ans);
+                } 
+            }
+            // 是否跳出
+            if (r == len - 1) break;
+
+             // 左边   
+            while(l < r && r - l >= (k - 1)) {
+                l ++;
+            }
+        }
+
+        int size = dp.size();
+        int[] ret = new int[size];
+        for(int i = 0;i < size; i++) {
+            ret[i] = dp.get(i);
+        }
+
+        return ret;
+    }
+```
+
