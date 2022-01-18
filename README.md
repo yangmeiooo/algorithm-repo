@@ -49,3 +49,7 @@
 
 
 
+### base
+
+1. [kmp](docs/base.md) (pmt, 计算出next 再双指针)
+2. 快速排序[](). // todo
