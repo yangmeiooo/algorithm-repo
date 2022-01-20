@@ -134,3 +134,119 @@ public class StrTest {
 
 
 
+方法一：
+
+​	中间位数交换。
+
+其实就是 从右边开始找，如果找到小于中值的，就换到前面，但是pivt先存着。
+
+如果左边开始找，大于的，就换到右边，最后中间位置，再存值。
+
+```java
+public class Test {
+
+    public static void quick(int l,int r, int[] arr) {
+        if (l >= r) return;
+        int patition = partitions(l , r , arr);
+        quick(l, patition- 1, arr);
+        quick(patition + 1, r, arr);
+    }
+
+    private static int partitions(int l, int r, int[] arr) {
+
+        int pitv = arr[l];
+        while(l < r) {
+            while(l < r && arr[r] >= pitv) {r--;}
+            arr[l] = arr[r];
+
+            while(l < r && arr[l] <= pitv) {l++;}
+            arr[r] = arr[l];
+        }
+
+        arr[l] = pitv;
+        return l;
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {2,5,1,4, 1, 9};
+        //int[] arr = {1,1,2,7,11,1,1};
+        quick(0, arr.length-1 , arr);
+        //sortss(arr, 0, arr.length -1);
+        for(int a : arr) {
+            System.out.print(a);
+        }
+
+    }
+}
+```
+
+
+
+
+
+方法二：
+
+其实就是，从左边开始找大于的，从右边开始找下于的。
+
+再交换。
+
+```java
+   public static void main(String[] args) {
+       int num[] = {1,1,2,7,11,1,1};
+       // int num[] = {2,5,1,4,1,9};
+        new QuickSort().sort(num, 0, num.length-1);
+        for (int n : num) {
+            System.out.print(n + " ");
+        }
+    }
+
+    void sort(int num[], int left, int right) {
+        if (left <right) {
+            int index = partition(num, left, right);
+            System.out.println(index);
+            sort(num, left, index-1);
+            sort(num, index, right);
+        }
+
+    }
+
+    public int partition(int[] num, int left, int right) {
+        if(num==null || num.length<=0 || left<0 || right>=num.length){
+            return 0;
+        }
+        int prio = num[left];
+        while(left<right){
+            while (num[left] < prio)
+                left++;
+            while (num[right] > prio)
+                right--;
+            if (left<=right) {
+                swap(num, left, right);
+                left++;
+                right--;
+            }
+        }
+        return left;
+    }
+
+    public void swap(int[] num, int left, int right) {
+        int temp = num[left];
+        num[left] = num[right];
+        num[right] = temp;
+    }
+
+```
+
+
+
+
+
+
+
+总结： 方法一和方法二的区别，最本质上的东西是，最后返回的index索引位置不同。
+
+方法一索引位置l，r 最终相等。  而方法二 index 不等。
+
+
+
