@@ -248,5 +248,67 @@ public class Test {
 
 方法一索引位置l，r 最终相等。  而方法二 index 不等。
 
+## 归并排序
+
+归并排序也是用到了分治的思想，  不同于快排的partition每次让一个数字找到一个合理的位置。
+
+而是递归到底，再合并的想法。
+
+
+
+```java
+public class GuiTest {
+
+    public static void gui(int l,int r , int[] arr){
+
+        if (l >= r) return;
+        int mid = (l + r) >> 1;
+        gui(l, mid, arr);
+        gui(mid + 1, r , arr);
+        merge(arr,l, mid ,r);
+    }
+
+    public static void merge(int[] arr,int l,int mid,int r) {
+        int[] temp = new int[r -l + 1];
+
+        int index = 0;
+        int low = l;
+        int high = mid + 1;
+
+        while(low <= mid && high <= r){
+            if (arr[low] <= arr[high]) {
+                temp[index++] = arr[low++];
+            } else {
+                temp[index++] = arr[high++];
+            }
+        }
+
+        while(low <= mid) {
+            temp[index++] = arr[low++];
+        }
+        while(high <= r) {
+            temp[index++] = arr[high++];
+        }
+        int j = 0;
+        int len = (r-l+1);
+        while(j < len) {
+            arr[j + l] = temp[j++];
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[] arr = {2,5,1,4,1,9};
+
+        gui(0, arr.length -1 , arr);
+        for(int a: arr) {
+            System.out.println(a);
+        }
+
+    }
+}
+
+```
+
 
 
